@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import {api} from "./question";
+import questionApi from "./question";
 
 export const app = express();
 
@@ -8,32 +8,21 @@ export const app = express();
 dotenv.config();
 const port = process.env.PORT;
 
-app.use("/question", api);
-app
-  .route("/todo")
-  .get((request, response) => {
-    response.send("TODO LIST ON THIS PAGE");
-  })
-  .post(function (request, response) {
-    response.send("TODO LIST is POST REQUEST");
-  });
+app.use(express.json());
+
+app.use("/question", questionApi);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app
-  .route("/book")
-  .get(function (req, res) {
-    res.send("Get a random book");
-  })
-
-  .post(function (req, res) {
-    res.send("Add a book");
-  })
-  .put(function (req, res) {
-    res.send("Update the book");
-  });
+app.use((req, res, next) => {
+  if (res !== undefined) {
+    res.json(res);
+  } else {
+    next();
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

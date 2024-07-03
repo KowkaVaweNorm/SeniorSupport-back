@@ -2,7 +2,7 @@
 /**
  * Вопрос как доменная часть
  */
-export type question = {
+export type QuestionItem = {
   text?: string
   tags?: string[]
 }

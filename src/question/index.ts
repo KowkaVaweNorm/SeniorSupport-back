@@ -1,2 +1,2 @@
-export {default as api} from "./controller";
+export {router as default} from "./controllers/question.controller";
 
